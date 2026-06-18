@@ -28,6 +28,19 @@ export function setDepth(commentsSlug: string, maxDepth: number): CollectionBefo
       id: data.parent,
       depth: 0,
     })
+
+    // A reply must belong to the same document as the parent it answers.
+    if (data.relatedDoc) {
+      const parentRelated = parent.relatedDoc as { relationTo?: string; value?: unknown } | undefined
+      const childRelated = data.relatedDoc as { relationTo?: string; value?: unknown }
+      if (
+        parentRelated?.relationTo !== childRelated.relationTo ||
+        Number(parentRelated?.value) !== Number(childRelated.value)
+      ) {
+        throw new Error('Reply must belong to the same document as its parent.')
+      }
+    }
+
     data.depth = resolveDepth(typeof parent.depth === 'number' ? parent.depth : 0, maxDepth)
     return data
   }

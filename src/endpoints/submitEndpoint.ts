@@ -19,7 +19,7 @@ export function submitEndpoint(options: ResolvedOptions): Endpoint {
 
       const identity = getClientIdentity({ headers: req.headers, body: data }, options.ipSalt)
 
-      if (identity.ipHash && !limiter.check(identity.ipHash)) {
+      if (!limiter.check(identity.ipHash || 'anon')) {
         return Response.json({ error: 'Too many comments, please slow down.' }, { status: 429 })
       }
 

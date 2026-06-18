@@ -66,4 +66,17 @@ describe('reactToComment', () => {
       reactToComment(payload, options, { commentId: String(c.id), emoji: 'rocket', ipHash: 'ip', fingerprintHash: 'fp' }),
     ).rejects.toThrow(/unknown reaction/i)
   })
+
+  it('rejects reacting to a non-approved comment', async () => {
+    const approvalOpts = resolveOptions({ enabledCollections: ['posts'], requireApproval: true })
+    const postId = await createPost(payload)
+    const pending = await submitComment(payload, approvalOpts, {
+      content: 'pending', authorName: 'A', mood: null,
+      relatedDoc: { relationTo: 'posts', value: postId },
+      parent: null, ipHash: '', fingerprintHash: '',
+    })
+    await expect(
+      reactToComment(payload, options, { commentId: String(pending.id), emoji: 'like', ipHash: 'ip', fingerprintHash: 'fp' }),
+    ).rejects.toThrow(/not available/i)
+  })
 })

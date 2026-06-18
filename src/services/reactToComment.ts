@@ -32,6 +32,22 @@ export async function reactToComment(
 
   const commentValue = coerceId(input.commentId)
 
+  // Only existing, approved comments can receive reactions.
+  let comment
+  try {
+    comment = await payload.findByID({
+      collection: options.commentsSlug as CollectionSlug,
+      id: commentValue,
+      overrideAccess: true,
+      depth: 0,
+    })
+  } catch {
+    throw new Error('Comment is not available for reactions.')
+  }
+  if (!comment || comment.status !== 'approved') {
+    throw new Error('Comment is not available for reactions.')
+  }
+
   const existing = await payload.find({
     collection: options.reactionsSlug as CollectionSlug,
     where: {

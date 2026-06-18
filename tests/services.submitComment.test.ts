@@ -99,4 +99,21 @@ describe('submitComment', () => {
       }),
     ).rejects.toThrow(/maximum nesting depth/i)
   })
+
+  it('rejects a reply whose parent belongs to a different document', async () => {
+    const postA = await createPost(payload, 'Post A')
+    const postB = await createPost(payload, 'Post B')
+    const parent = await submitComment(payload, options, {
+      content: 'parent on A', authorName: 'A', mood: null,
+      relatedDoc: { relationTo: 'posts', value: postA },
+      parent: null, ipHash: '', fingerprintHash: '',
+    })
+    await expect(
+      submitComment(payload, options, {
+        content: 'reply claiming B', authorName: 'B', mood: null,
+        relatedDoc: { relationTo: 'posts', value: postB },
+        parent: String(parent.id), ipHash: '', fingerprintHash: '',
+      }),
+    ).rejects.toThrow(/same document as its parent/i)
+  })
 })
