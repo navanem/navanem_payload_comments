@@ -6,7 +6,7 @@ import { getClientIdentity } from '../utils/getClientIdentity.js'
 
 export function reactEndpoint(options: ResolvedOptions): Endpoint {
   return {
-    path: '/comments/:id/react',
+    path: '/comments-api/:id/react',
     method: 'post',
     handler: async (req: PayloadRequest) => {
       await addDataAndFileToRequest(req)

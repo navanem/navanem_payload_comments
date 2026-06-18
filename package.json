@@ -1,6 +1,6 @@
 {
   "name": "@navanem/payload-comments",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Anonymous comments and reactions plugin for Payload 3.x with optional moderation and 3-level threads.",
   "license": "MIT",
   "author": "navanem <tools@sunitech.ch>",

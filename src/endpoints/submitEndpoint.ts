@@ -11,7 +11,7 @@ export function submitEndpoint(options: ResolvedOptions): Endpoint {
   const limiter = createRateLimiter(options.rateLimit)
 
   return {
-    path: '/comments/submit',
+    path: '/comments-api/submit',
     method: 'post',
     handler: async (req: PayloadRequest) => {
       await addDataAndFileToRequest(req)

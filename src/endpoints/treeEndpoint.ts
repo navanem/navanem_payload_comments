@@ -4,7 +4,7 @@ import { getCommentTree } from '../services/getCommentTree.js'
 
 export function treeEndpoint(options: ResolvedOptions): Endpoint {
   return {
-    path: '/comments/tree',
+    path: '/comments-api/tree',
     method: 'get',
     handler: async (req: PayloadRequest) => {
       const relationTo = req.searchParams.get('relationTo') ?? ''

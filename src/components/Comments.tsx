@@ -34,8 +34,8 @@ export interface CommentsProps {
 const apiBase = (serverURL?: string) => `${serverURL ?? ''}/api`
 
 function browserFingerprint(): string {
-  if (typeof navigator === 'undefined') return ''
-  return [navigator.userAgent, navigator.language, screen?.width, screen?.height].join('|')
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return ''
+  return [navigator.userAgent, navigator.language, window.screen?.width, window.screen?.height].join('|')
 }
 
 export function Comments({
@@ -53,7 +53,7 @@ export function Comments({
   const load = useCallback(async () => {
     setLoading(true)
     const res = await fetch(
-      `${apiBase(serverURL)}/comments/tree?relationTo=${encodeURIComponent(relationTo)}&docId=${encodeURIComponent(docId)}`,
+      `${apiBase(serverURL)}/comments-api/tree?relationTo=${encodeURIComponent(relationTo)}&docId=${encodeURIComponent(docId)}`,
     )
     const json = await res.json()
     setComments(json.comments ?? [])
@@ -66,7 +66,7 @@ export function Comments({
 
   const react = useCallback(
     async (commentId: string, emoji: string) => {
-      await fetch(`${apiBase(serverURL)}/comments/${commentId}/react`, {
+      await fetch(`${apiBase(serverURL)}/comments-api/${commentId}/react`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ emoji, fingerprint }),
@@ -213,7 +213,7 @@ function CommentForm({
     e.preventDefault()
     setSubmitting(true)
     setNotice(null)
-    const res = await fetch(`${apiBase(serverURL)}/comments/submit`, {
+    const res = await fetch(`${apiBase(serverURL)}/comments-api/submit`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
