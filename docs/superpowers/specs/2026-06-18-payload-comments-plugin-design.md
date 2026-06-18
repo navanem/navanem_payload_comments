@@ -6,8 +6,7 @@
 
 ## Goal
 
-A Payload comment-management plugin "Thrive Comments style", but idiomatic to
-Payload and easy to deploy on any Payload 3.x project.
+A Payload comment-management plugin - Payload and easy to deploy on any Payload 3.x project.
 
 v1 scope (no authentication):
 
@@ -173,8 +172,8 @@ Integration tests on the `dev/` app (TDD approach) covering at least:
 - **SemVer** + `CHANGELOG.md` (Keep a Changelog format), git tags `vX.Y.Z`,
   starting at `0.1.0`.
 - **License: MIT.**
-- **Commits:** author `navanem <tools@sunitech.ch>`. No reference to
-  Claude/Anthropic anywhere (code, comments, README, CHANGELOG, or co-author).
+- **Commits:** author `navanem <tools@sunitech.ch>`. No AI-assistant
+  attribution anywhere (code, comments, README, CHANGELOG, or co-author).
 
 ## Out of scope for v1 (future)
 

@@ -13,7 +13,7 @@
 ## Conventions for every task
 
 - Author all commits as `navanem <tools@sunitech.ch>` (git is already configured locally).
-- **NEVER** mention Claude/Anthropic anywhere (code, comments, commit messages, docs, co-author trailers).
+- **NEVER** add AI-assistant attribution anywhere (code, comments, commit messages, docs, co-author trailers).
 - Use `pnpm` for all package commands.
 - Run commands from the repo root: `C:/Users/emanu/Documents/GitHub/nanavanem_payload_comments`.
 
@@ -2798,7 +2798,7 @@ git push origin v0.1.0
 
 ## Self-Review (completed during planning)
 
-- **Spec coverage:** Payload 3.x (Task 1, 9), polymorphic relation (Task 7), anonymous name+email with protected email (Task 7, 15), mood emoji A (Task 7, 16), reactions B with dedup (Task 8, 13), requireApproval workflow (Task 6, 7, 11), 3-level depth enforcement (Task 6, 11), anti-spam honeypot/rate-limit/length/links (Task 4, 5, 14), hashed IP/fingerprint (Task 3, 10), `<Comments />` component + raw API (Task 16, 17), admin fidelity via native fields (Task 7, 8), npm-ready package + exports (Task 1), docs (Task 17), SemVer + CHANGELOG + tag (Task 18), no Claude references (Conventions). All covered.
+- **Spec coverage:** Payload 3.x (Task 1, 9), polymorphic relation (Task 7), anonymous name+email with protected email (Task 7, 15), mood emoji A (Task 7, 16), reactions B with dedup (Task 8, 13), requireApproval workflow (Task 6, 7, 11), 3-level depth enforcement (Task 6, 11), anti-spam honeypot/rate-limit/length/links (Task 4, 5, 14), hashed IP/fingerprint (Task 3, 10), `<Comments />` component + raw API (Task 16, 17), admin fidelity via native fields (Task 7, 8), npm-ready package + exports (Task 1), docs (Task 17), SemVer + CHANGELOG + tag (Task 18), no AI-assistant attribution (Conventions). All covered.
 - **Placeholder scan:** The only deliberate temporary code is the endpoint stubs in Task 9, fully replaced in Task 14 (called out explicitly). No TBD/TODO remain.
 - **Type consistency:** `ResolvedOptions`, `Reaction`, `PublicComment`, `submitComment`/`getCommentTree`/`reactToComment` signatures are consistent across tasks and tests.
 
