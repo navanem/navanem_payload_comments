@@ -1,6 +1,7 @@
 import type { Endpoint, PayloadRequest } from 'payload'
 import type { ResolvedOptions } from '../types.js'
 import { getCommentTree } from '../services/getCommentTree.js'
+import { isCommentingEnabled } from '../utils/getEnabledCollections.js'
 
 export function treeEndpoint(options: ResolvedOptions): Endpoint {
   return {
@@ -14,6 +15,9 @@ export function treeEndpoint(options: ResolvedOptions): Endpoint {
       }
       if (!options.enabledCollections.includes(relationTo as never)) {
         return Response.json({ error: 'Collection not enabled for comments' }, { status: 400 })
+      }
+      if (!(await isCommentingEnabled(req.payload, options, relationTo))) {
+        return Response.json({ comments: [], disabled: true })
       }
       const comments = await getCommentTree(req.payload, options, { relationTo, docId })
       return Response.json({ comments })

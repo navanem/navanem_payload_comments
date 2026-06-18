@@ -10,6 +10,8 @@ moderation, mood emojis, reactions on comments, and up to 3 levels of replies.
 - Optional approval workflow before comments are published.
 - Up to 3 levels of nested replies.
 - Built-in lightweight anti-spam (honeypot, rate limiting, length/link rules).
+- **Comments Settings** global: enable/disable comments per collection at runtime.
+- **Comment Statistics** admin view: KPIs, per-collection and per-mood breakdowns, and recent comments, with filters.
 - Ready-to-use `<Comments />` React component, or build your own on the REST API.
 
 ## Install
@@ -45,6 +47,25 @@ Set a salt for IP hashing in your environment:
 ```bash
 COMMENTS_IP_SALT="a-long-random-string"
 ```
+
+## Admin: Settings & Statistics
+
+The plugin registers a **Comments Settings** global (admin group "Comments") where
+an admin can toggle commenting per collection at runtime. When a collection is
+disabled, new submissions are rejected and the `<Comments />` widget shows a
+"closed" notice instead of the thread. Unset = every configured collection is
+enabled (fail-open).
+
+It also registers a **Comment Statistics** view at `/admin/comments-statistics`
+(KPIs, per-collection and per-mood breakdowns, and recent comments, filterable by
+collection / status / period), plus a nav link to it via `afterNavLinks`. The view
+queries moderation data server-side and is gated on an authenticated admin user.
+
+The view and nav-link components are referenced through the host import map at the
+vendored path `@/plugins/payload-comments/components/*`. If you vendor this plugin
+under `src/plugins/payload-comments`, add the matching import-map entries (run
+`payload generate:importmap`, or add them by hand). Hosts that ship a custom Nav
+can ignore the `afterNavLinks` entry and place the Statistics link themselves.
 
 ## Front-end
 

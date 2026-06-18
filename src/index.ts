@@ -6,6 +6,7 @@ import { buildCommentReactionsCollection } from './collections/CommentReactions.
 import { treeEndpoint } from './endpoints/treeEndpoint.js'
 import { submitEndpoint } from './endpoints/submitEndpoint.js'
 import { reactEndpoint } from './endpoints/reactEndpoint.js'
+import { buildCommentsSettings } from './globals/CommentsSettings.js'
 
 export type { CommentsPluginOptions, Reaction, CommentStatus } from './types.js'
 export { DEFAULT_REACTIONS } from './defaults.js'
@@ -22,7 +23,10 @@ export const commentsPlugin =
       buildCommentReactionsCollection(options),
     ]
 
-    // When disabled, still register collections (stable DB schema) but skip endpoints.
+    // The settings global is always registered (stable DB schema), even when disabled.
+    config.globals = [...(config.globals ?? []), buildCommentsSettings(options)]
+
+    // When disabled, still register collections + global but skip endpoints/admin UI.
     if (options.disabled) return config
 
     config.endpoints = [
@@ -31,6 +35,27 @@ export const commentsPlugin =
       submitEndpoint(options),
       reactEndpoint(options),
     ]
+
+    // Admin: the Statistics view + a nav link to it. (Hosts with a custom Nav can
+    // ignore the afterNavLinks entry and place the link themselves.) Component refs
+    // resolve via the host importMap at the vendored path @/plugins/payload-comments.
+    config.admin = {
+      ...config.admin,
+      components: {
+        ...config.admin?.components,
+        afterNavLinks: [
+          ...(config.admin?.components?.afterNavLinks ?? []),
+          '@/plugins/payload-comments/components/CommentsStatsNavLink#CommentsStatsNavLink',
+        ],
+        views: {
+          ...config.admin?.components?.views,
+          commentsStatistics: {
+            Component: '@/plugins/payload-comments/components/CommentsStatsView#CommentsStatsView',
+            path: '/comments-statistics',
+          },
+        },
+      },
+    }
 
     return config
   }

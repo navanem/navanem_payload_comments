@@ -48,6 +48,7 @@ export function Comments({
 }: CommentsProps) {
   const [comments, setComments] = useState<PublicComment[]>([])
   const [loading, setLoading] = useState(true)
+  const [closed, setClosed] = useState(false)
   const fingerprint = useMemo(browserFingerprint, [])
 
   const load = useCallback(async () => {
@@ -57,6 +58,7 @@ export function Comments({
     )
     const json = await res.json()
     setComments(json.comments ?? [])
+    setClosed(Boolean(json.disabled))
     setLoading(false)
   }, [serverURL, relationTo, docId])
 
@@ -77,6 +79,13 @@ export function Comments({
   )
 
   if (loading) return <div className={styles.wrapper}>Loading comments…</div>
+
+  if (closed)
+    return (
+      <div className={styles.wrapper}>
+        <p style={{ opacity: 0.7, fontSize: 14, margin: 0 }}>Comments are closed for this content.</p>
+      </div>
+    )
 
   return (
     <div className={styles.wrapper}>

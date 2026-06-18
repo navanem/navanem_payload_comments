@@ -5,6 +5,7 @@ import { submitComment } from '../services/submitComment.js'
 import { validateSubmission } from '../utils/validateContent.js'
 import { getClientIdentity } from '../utils/getClientIdentity.js'
 import { createRateLimiter } from '../utils/rateLimit.js'
+import { isCommentingEnabled } from '../utils/getEnabledCollections.js'
 
 export function submitEndpoint(options: ResolvedOptions): Endpoint {
   // One limiter instance per plugin registration (per server process).
@@ -43,6 +44,9 @@ export function submitEndpoint(options: ResolvedOptions): Endpoint {
       }
       if (!options.enabledCollections.includes(relatedDoc.relationTo as never)) {
         return Response.json({ error: 'Collection not enabled for comments.' }, { status: 400 })
+      }
+      if (!(await isCommentingEnabled(req.payload, options, relatedDoc.relationTo))) {
+        return Response.json({ error: 'Comments are closed for this content.' }, { status: 403 })
       }
 
       try {

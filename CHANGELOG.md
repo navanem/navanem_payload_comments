@@ -5,6 +5,21 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2026-06-18
+
+### Added
+
+- **Comments Settings** global (admin group "Comments") to enable or disable
+  commenting per collection at runtime. The submit and tree endpoints consult it
+  and fail open when it has never been saved (or before its table is migrated).
+- **Comment Statistics** admin view at `/admin/comments-statistics`: KPIs, per-
+  collection and per-mood breakdowns, and recent comments, filterable by
+  collection, status and period. Queries are auth-gated server-side so no data
+  is rendered for anonymous requests. A nav link is registered via
+  `afterNavLinks` for the default Nav.
+- `<Comments />` now renders a "closed" notice when commenting is disabled for
+  its collection.
+
 ## [0.1.1] - 2026-06-18
 
 ### Fixed
