@@ -4,7 +4,7 @@
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `enabledCollections` | `string[]` | — (required) | Collections whose documents can be commented on. |
+| `enabledCollections` | `string[]` | — (required) | Collections whose documents can be commented on. Defines the set; individual collections can then be toggled on/off at runtime (see below). |
 | `requireApproval` | `boolean` | `true` | New comments start as `pending` and stay hidden until approved. |
 | `requireEmail` | `boolean` | `false` | Require an email when submitting. |
 | `maxDepth` | `1 \| 2 \| 3` | `3` | Maximum reply nesting depth. |
@@ -29,6 +29,32 @@ interface Reaction {
 ```
 
 The same set is used for the comment author's "mood" and for reactions on comments.
+
+## Runtime per-collection toggle (Comments Settings)
+
+`enabledCollections` is the *config-time* set of commentable collections. The
+plugin also registers a **Comments Settings** global (admin group "Comments")
+where an admin can enable or disable commenting per collection **at runtime**,
+without redeploying.
+
+- The `submit` and `tree` endpoints consult this global on every request.
+- When a collection is disabled, new submissions are rejected and the
+  `<Comments />` widget renders a "closed" notice instead of the thread.
+- The global is **fail-open**: if it has never been saved (or before its table is
+  migrated), every collection in `enabledCollections` is treated as enabled.
+
+## Admin statistics view
+
+A **Comment Statistics** view is mounted at `/admin/comments-statistics` (KPIs,
+per-collection and per-mood breakdowns, recent comments; filterable by
+collection, status and period). It queries moderation data server-side and is
+gated on an authenticated admin user, so nothing is rendered for anonymous
+requests. A nav link is registered through `afterNavLinks` for the default Nav.
+
+If you vendor the plugin under `src/plugins/payload-comments`, make sure the
+admin import map resolves `@/plugins/payload-comments/components/*` (run
+`payload generate:importmap`, or add the entries by hand). Hosts with a custom
+Nav can ignore the `afterNavLinks` entry and link to the view themselves.
 
 ## Privacy
 

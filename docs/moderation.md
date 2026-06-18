@@ -25,6 +25,21 @@ de-duplicated per visitor (hashed IP + fingerprint). They live in the
 **Comment Reactions** collection; `reactionCounts` on each comment is a
 denormalized cache derived from it.
 
+## Statistics
+
+A **Comment Statistics** view is available at `/admin/comments-statistics` (linked
+from the admin nav). It shows KPIs (totals by status, reactions), per-collection
+and per-mood breakdowns, and a recent-comments table, all filterable by
+collection, status and time period. The data is queried server-side and only
+rendered for an authenticated admin.
+
+## Disabling comments per collection
+
+From the **Comments Settings** global (admin group "Comments") you can turn
+commenting off for a specific collection at runtime. Disabled collections reject
+new submissions and show a "closed" notice in the `<Comments />` widget. Existing
+comments stay in the database and remain visible in the admin.
+
 ## Anti-spam
 
 Built-in protections: honeypot field, per-IP rate limiting, min/max length, and
