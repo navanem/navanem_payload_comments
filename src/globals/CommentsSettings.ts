@@ -20,7 +20,7 @@ export function buildCommentsSettings(options: ResolvedOptions): GlobalConfig {
     label: 'Comments Settings',
     admin: {
       group: 'Comments',
-      description: 'Enable or disable comments per collection.',
+      description: 'Enable or disable comments per collection, and require approval before publishing.',
     },
     access: {
       // Public read so the submit/tree endpoints can consult it for anonymous
@@ -38,6 +38,16 @@ export function buildCommentsSettings(options: ResolvedOptions): GlobalConfig {
         admin: {
           description:
             'Comments are accepted and shown only on the collections selected here. All collections are enabled by default.',
+        },
+      },
+      {
+        name: 'requireApproval',
+        type: 'checkbox',
+        defaultValue: options.requireApproval,
+        label: 'Require approval before a comment is published',
+        admin: {
+          description:
+            'When on, a new comment is held as "pending" until an admin approves it. When off, comments are published immediately.',
         },
       },
     ],

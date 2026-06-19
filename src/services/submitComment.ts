@@ -1,5 +1,6 @@
 import type { CollectionSlug, Payload } from 'payload'
 import type { ResolvedOptions } from '../types.js'
+import { getRequireApproval } from '../utils/getEnabledCollections.js'
 
 export interface SubmitCommentInput {
   content: string
@@ -28,6 +29,8 @@ export async function submitComment(payload: Payload, options: ResolvedOptions, 
   const parentValue =
     input.parent != null && /^\d+$/.test(input.parent) ? Number(input.parent) : (input.parent ?? undefined)
 
+  const requireApproval = await getRequireApproval(payload, options)
+
   return payload.create({
     collection: options.commentsSlug as CollectionSlug,
     data: {
@@ -35,7 +38,7 @@ export async function submitComment(payload: Payload, options: ResolvedOptions, 
       authorName: input.authorName,
       authorEmail: input.authorEmail,
       mood: input.mood ?? undefined,
-      status: options.requireApproval ? 'pending' : 'approved',
+      status: requireApproval ? 'pending' : 'approved',
       relatedDoc: { relationTo: input.relatedDoc.relationTo, value: relatedValue },
       parent: parentValue,
       ipHash: input.ipHash,

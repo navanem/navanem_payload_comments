@@ -5,6 +5,18 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-06-19
+
+### Added
+
+- **Markdown comments**: comment bodies render a safe subset of Markdown (bold,
+  italic, strikethrough, inline/block code, links, lists, blockquotes) via
+  `react-markdown` + `remark-gfm`. Raw HTML is never rendered (no XSS); links are
+  hardened with `rel="noopener noreferrer nofollow ugc"` and open in a new tab.
+- **Moderation toggle in Settings**: the Comments Settings global gained a
+  `requireApproval` checkbox to turn mandatory approval on/off at runtime. The
+  submit flow reads it live, falling back to the `requireApproval` option.
+
 ## [0.2.0] - 2026-06-18
 
 ### Added

@@ -38,3 +38,23 @@ export async function isCommentingEnabled(
   const enabled = await getEnabledCollections(payload, options)
   return enabled.includes(relationTo)
 }
+
+/**
+ * Resolve whether new comments require admin approval, from the runtime Comments
+ * Settings global, falling back to the static `requireApproval` option. Fail-open
+ * to the option when the global is unsaved (returns defaults) or the table does
+ * not exist yet (pre-migration).
+ */
+export async function getRequireApproval(payload: Payload, options: ResolvedOptions): Promise<boolean> {
+  try {
+    const settings = await payload.findGlobal({
+      slug: COMMENTS_SETTINGS_SLUG,
+      depth: 0,
+      overrideAccess: true,
+    })
+    const value = (settings as { requireApproval?: unknown })?.requireApproval
+    return typeof value === 'boolean' ? value : Boolean(options.requireApproval)
+  } catch {
+    return Boolean(options.requireApproval)
+  }
+}

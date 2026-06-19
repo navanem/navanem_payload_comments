@@ -1,6 +1,6 @@
 {
   "name": "@navanem/payload-comments",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Anonymous comments and reactions plugin for Payload 3.x with optional moderation and 3-level threads.",
   "license": "MIT",
   "author": "navanem <tools@sunitech.ch>",
@@ -28,6 +28,10 @@
     "dev": "payload dev",
     "test": "vitest run",
     "test:watch": "vitest"
+  },
+  "dependencies": {
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
   },
   "peerDependencies": {
     "payload": "^3.0.0",

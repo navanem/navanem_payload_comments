@@ -115,3 +115,46 @@
   font-size: 0.85rem;
   color: var(--pc-muted);
 }
+
+/* Rendered Markdown body of a comment */
+.body {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--pc-fg);
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+.body > :first-child { margin-top: 0; }
+.body > :last-child { margin-bottom: 0; }
+.body p { margin: 0 0 8px; }
+.body a { color: var(--pc-accent); text-decoration: underline; }
+.body code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+  background: var(--pc-bg);
+  border: 1px solid var(--pc-border);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+.body pre {
+  background: var(--pc-bg);
+  border: 1px solid var(--pc-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  overflow-x: auto;
+  margin: 0 0 8px;
+}
+.body pre code { background: none; border: none; padding: 0; }
+.body ul,
+.body ol { margin: 0 0 8px; padding-left: 22px; }
+.body blockquote {
+  margin: 0 0 8px;
+  padding-left: 12px;
+  border-left: 3px solid var(--pc-border);
+  color: var(--pc-muted);
+}
+.hint {
+  font-size: 11.5px;
+  color: var(--pc-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}

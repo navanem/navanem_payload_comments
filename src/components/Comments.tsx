@@ -4,6 +4,29 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styles from './Comments.module.css'
 import { DEFAULT_REACTIONS } from '../defaults.js'
 import type { Reaction } from '../types.js'
+import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+
+// Safe Markdown rendering for user comments. react-markdown v10 renders to React
+// elements and ignores raw HTML by default (no XSS); we additionally allow-list
+// the element set and harden links (new tab + noopener + nofollow ugc). remark-gfm
+// adds autolinks, strikethrough and task lists.
+const MD_ALLOWED = ['p', 'br', 'strong', 'em', 'del', 'a', 'code', 'pre', 'ul', 'ol', 'li', 'blockquote']
+const MD_COMPONENTS = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  a: ({ node, ...props }: any) => <a {...props} target="_blank" rel="noopener noreferrer nofollow ugc" />,
+}
+
+/** Renders a comment body as a safe subset of Markdown. */
+function CommentBody({ text }: { text: string }) {
+  return (
+    <div className={styles.body}>
+      <Markdown remarkPlugins={[remarkGfm]} allowedElements={MD_ALLOWED} unwrapDisallowed components={MD_COMPONENTS}>
+        {text}
+      </Markdown>
+    </div>
+  )
+}
 
 interface PublicComment {
   id: string
@@ -144,7 +167,7 @@ function CommentNode(props: NodeProps) {
         {mood && <span title={mood.label}>{mood.emoji}</span>}
         <span>{new Date(comment.createdAt).toLocaleDateString()}</span>
       </div>
-      <div>{comment.content}</div>
+      <CommentBody text={comment.content} />
       <div className={styles.reactions}>
         {reactions.map((r) => (
           <button
@@ -281,6 +304,7 @@ function CommentForm({
         rows={3}
         required
       />
+      <small className={styles.hint}>Markdown supported — bold, italic, code, links, lists</small>
       <div className={styles.moodPicker}>
         {reactions.map((r) => (
           <button
