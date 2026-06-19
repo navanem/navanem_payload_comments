@@ -5,7 +5,7 @@
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `enabledCollections` | `string[]` | — (required) | Collections whose documents can be commented on. Defines the set; individual collections can then be toggled on/off at runtime (see below). |
-| `requireApproval` | `boolean` | `true` | New comments start as `pending` and stay hidden until approved. |
+| `requireApproval` | `boolean` | `true` | New comments start as `pending` and stay hidden until approved. Seeds the runtime **Require approval** toggle in the Comments Settings global, which then governs it live. |
 | `requireEmail` | `boolean` | `false` | Require an email when submitting. |
 | `maxDepth` | `1 \| 2 \| 3` | `3` | Maximum reply nesting depth. |
 | `reactions` | `Reaction[]` | 6 defaults | Emoji set for both comment mood and reactions. |
@@ -42,6 +42,10 @@ without redeploying.
   `<Comments />` widget renders a "closed" notice instead of the thread.
 - The global is **fail-open**: if it has never been saved (or before its table is
   migrated), every collection in `enabledCollections` is treated as enabled.
+
+The same global also carries a **Require approval** checkbox (seeded from the
+`requireApproval` option) that governs moderation at runtime — see
+[moderation](./moderation.md).
 
 ## Admin statistics view
 

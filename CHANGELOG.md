@@ -58,5 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Salted hashing of IPs and fingerprints (no clear-text storage).
 - Ready-to-use `<Comments />` React component and a documented REST API.
 
+[0.3.0]: https://github.com/navanem/nanavanem_payload_comments/releases/tag/v0.3.0
+[0.2.0]: https://github.com/navanem/nanavanem_payload_comments/releases/tag/v0.2.0
 [0.1.1]: https://github.com/navanem/nanavanem_payload_comments/releases/tag/v0.1.1
 [0.1.0]: https://github.com/navanem/nanavanem_payload_comments/releases/tag/v0.1.0

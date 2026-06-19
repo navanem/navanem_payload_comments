@@ -25,6 +25,15 @@ import { Comments } from '@navanem/payload-comments/client'
 | `requireEmail` | `boolean` | `false` | Mirror server `requireEmail`. |
 | `maxDepth` | `number` | `3` | Mirror server `maxDepth`. |
 
+### Markdown
+
+Comment bodies are rendered as a safe subset of Markdown (bold, italic,
+strikethrough, inline/block code, links, lists, blockquotes) via `react-markdown`
++ `remark-gfm`. Raw HTML is never rendered, so user input cannot inject markup;
+links are forced to open in a new tab with `rel="noopener noreferrer nofollow ugc"`.
+If you build your own UI on the REST API, the stored `content` is the raw Markdown
+string — render it with your own safe Markdown renderer.
+
 ### Styling
 
 The component uses CSS Modules with CSS variables. Override them by wrapping:

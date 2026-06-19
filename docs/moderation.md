@@ -9,6 +9,11 @@ Each comment has a `status`: `pending`, `approved`, `spam`, or `trash`.
 - With `requireApproval: false`, comments are `approved` immediately; admins can
   still move them to `spam` or `trash` afterwards.
 
+The `requireApproval` plugin option is only the initial default. The **Comments
+Settings** global has a **Require approval** checkbox that overrides it at runtime
+— the submit flow reads it live on every request, so moderation can be switched on
+or off without redeploying.
+
 ## In the admin panel
 
 Open the **Comments** collection. Use the `status` filter to find pending

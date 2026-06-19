@@ -6,8 +6,10 @@ moderation, mood emojis, reactions on comments, and up to 3 levels of replies.
 ## Features
 
 - Anyone can comment (name + optional/required email) with a mood emoji.
+- Comment bodies support a safe subset of **Markdown** (bold, italic, code, links,
+  lists, blockquotes); raw HTML is never rendered (no XSS).
 - React to existing comments with a configurable emoji set.
-- Optional approval workflow before comments are published.
+- Optional approval workflow before comments are published — toggleable at runtime.
 - Up to 3 levels of nested replies.
 - Built-in lightweight anti-spam (honeypot, rate limiting, length/link rules).
 - **Comments Settings** global: enable/disable comments per collection at runtime.
@@ -54,7 +56,9 @@ The plugin registers a **Comments Settings** global (admin group "Comments") whe
 an admin can toggle commenting per collection at runtime. When a collection is
 disabled, new submissions are rejected and the `<Comments />` widget shows a
 "closed" notice instead of the thread. Unset = every configured collection is
-enabled (fail-open).
+enabled (fail-open). The same global has a **Require approval** checkbox to turn
+mandatory moderation on/off at runtime; the submit flow reads it live and falls
+back to the `requireApproval` option.
 
 It also registers a **Comment Statistics** view at `/admin/comments-statistics`
 (KPIs, per-collection and per-mood breakdowns, and recent comments, filterable by
