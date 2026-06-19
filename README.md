@@ -16,6 +16,36 @@ moderation, mood emojis, reactions on comments, and up to 3 levels of replies.
 - **Comment Statistics** admin view: KPIs, per-collection and per-mood breakdowns, and recent comments, with filters.
 - Ready-to-use `<Comments />` React component, or build your own on the REST API.
 
+## Screenshots
+
+### Front-end
+
+![The Comments widget on a live article](https://www.navanem.com/api/media/file/navanem-plugin-payload-comments-frontend.png)
+
+The bundled `<Comments />` component on a published page: a threaded comment with a Markdown-rendered body, a mood emoji and a date, a reaction row and a reply button, plus the composer (name, optional email, Markdown text and mood).
+
+### Moderation (Comments collection)
+
+![The comments moderation queue in the Payload admin](https://www.navanem.com/api/media/file/navanem-plugin-payload-comments-admin.png)
+
+Every comment lands in a standard Payload collection, so moderation uses the admin UI you already know. The list is your moderation queue — author, excerpt, target collection, status and date — with native filtering and bulk actions; approving a pending comment publishes it instantly.
+
+![A single comment's detail view in the admin](https://www.navanem.com/api/media/file/navanem-plugin-payload-comments-admin-details.png)
+
+Opening a comment shows its full record — author and email, mood, the related document and threaded parent, the salted IP/fingerprint hashes used for anti-spam — and the status selector to approve, mark as spam, or trash it.
+
+### Settings
+
+![The Comments Settings global](https://www.navanem.com/api/media/file/navanem-plugin-payload-comments-admin-settings.png)
+
+The **Comments Settings** global toggles commenting per collection at runtime and exposes the **Require approval** switch, so you can turn mandatory pre-publish moderation on or off without a redeploy.
+
+### Statistics
+
+![The Comment Statistics admin view](https://www.navanem.com/api/media/file/navanem-plugin-payload-comments-admin-statistics.png)
+
+The **Comment Statistics** view: KPIs (totals by status, reaction count, per-day rate), per-collection and per-mood breakdowns, and a recent-comments table — all filterable by collection, status and period, and auth-gated server-side.
+
 ## Install
 
 ```bash
@@ -92,3 +122,7 @@ See [docs/frontend-integration.md](docs/frontend-integration.md) for props, styl
 ## License
 
 MIT © navanem
+
+---
+
+Built by [navanem](https://www.navanem.com) and running in production on [www.navanem.com](https://www.navanem.com).
