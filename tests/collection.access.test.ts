@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
 import type { Payload } from 'payload'
-import { getTestPayload, clearComments, createPost } from './helpers/payload.js'
+import { getTestPayload, clearComments, createPost, setRequireApproval } from './helpers/payload.js'
 import { submitComment } from '../src/services/submitComment.js'
 import { resolveOptions } from '../src/defaults.js'
 
@@ -16,6 +16,7 @@ beforeEach(async () => {
 
 describe('public collection access', () => {
   it('hides non-approved comments from unauthenticated reads', async () => {
+    await setRequireApproval(payload, true)
     const postId = await createPost(payload)
     await submitComment(payload, approval, {
       content: 'pending',
@@ -36,6 +37,7 @@ describe('public collection access', () => {
   })
 
   it('shows approved comments to unauthenticated reads', async () => {
+    await setRequireApproval(payload, false)
     const noApproval = resolveOptions({ enabledCollections: ['posts'], requireApproval: false })
     const postId = await createPost(payload)
     await submitComment(payload, noApproval, {

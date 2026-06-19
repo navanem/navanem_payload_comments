@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
 import type { Payload } from 'payload'
-import { getTestPayload, clearComments, createPost } from './helpers/payload.js'
+import { getTestPayload, clearComments, createPost, setRequireApproval } from './helpers/payload.js'
 import { submitComment } from '../src/services/submitComment.js'
 import { reactToComment } from '../src/services/reactToComment.js'
 import { resolveOptions } from '../src/defaults.js'
@@ -13,6 +13,8 @@ beforeAll(async () => {
 })
 beforeEach(async () => {
   await clearComments(payload)
+  // Reactions are only allowed on approved comments, so publish immediately by default.
+  await setRequireApproval(payload, false)
 })
 
 async function makeComment(postId: string) {
@@ -68,6 +70,7 @@ describe('reactToComment', () => {
   })
 
   it('rejects reacting to a non-approved comment', async () => {
+    await setRequireApproval(payload, true)
     const approvalOpts = resolveOptions({ enabledCollections: ['posts'], requireApproval: true })
     const postId = await createPost(payload)
     const pending = await submitComment(payload, approvalOpts, {

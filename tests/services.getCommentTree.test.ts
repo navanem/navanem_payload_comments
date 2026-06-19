@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
 import type { Payload } from 'payload'
-import { getTestPayload, clearComments, createPost } from './helpers/payload.js'
+import { getTestPayload, clearComments, createPost, setRequireApproval } from './helpers/payload.js'
 import { submitComment } from '../src/services/submitComment.js'
 import { getCommentTree } from '../src/services/getCommentTree.js'
 import { resolveOptions } from '../src/defaults.js'
@@ -13,6 +13,8 @@ beforeAll(async () => {
 })
 beforeEach(async () => {
   await clearComments(payload)
+  // Default this suite to immediate publication; the non-approved case flips it.
+  await setRequireApproval(payload, false)
 })
 
 async function add(postId: string, content: string, parent: string | null = null) {
@@ -51,6 +53,7 @@ describe('getCommentTree', () => {
   })
 
   it('excludes non-approved comments', async () => {
+    await setRequireApproval(payload, true)
     const approvalOpts = resolveOptions({ enabledCollections: ['posts'], requireApproval: true })
     const postId = await createPost(payload)
     await submitComment(payload, approvalOpts, {

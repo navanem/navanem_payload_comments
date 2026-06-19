@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
 import type { Payload } from 'payload'
-import { getTestPayload, clearComments, createPost } from './helpers/payload.js'
+import { getTestPayload, clearComments, createPost, setRequireApproval } from './helpers/payload.js'
 import { submitComment } from '../src/services/submitComment.js'
 import { resolveOptions } from '../src/defaults.js'
 
@@ -16,6 +16,7 @@ beforeEach(async () => {
 
 describe('submitComment', () => {
   it('creates a pending top-level comment when approval is required', async () => {
+    await setRequireApproval(payload, true)
     const postId = await createPost(payload)
     const result = await submitComment(payload, options, {
       content: 'Nice article',
@@ -33,6 +34,7 @@ describe('submitComment', () => {
   })
 
   it('creates an approved comment when approval not required', async () => {
+    await setRequireApproval(payload, false)
     const noApproval = resolveOptions({ enabledCollections: ['posts'], requireApproval: false })
     const postId = await createPost(payload)
     const result = await submitComment(payload, noApproval, {

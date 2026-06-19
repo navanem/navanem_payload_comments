@@ -34,3 +34,16 @@ export async function createPost(payload: Payload, title = 'Test Post'): Promise
   const post = await payload.create({ collection: 'posts', data: { title } })
   return String(post.id)
 }
+
+/**
+ * Set the runtime moderation toggle on the Comments Settings global. Since the
+ * submit flow now reads `requireApproval` live from this global (seeded from the
+ * plugin option), tests that depend on a comment's status drive it through here.
+ */
+export async function setRequireApproval(payload: Payload, value: boolean): Promise<void> {
+  await payload.updateGlobal({
+    slug: 'comments-settings',
+    data: { requireApproval: value },
+    overrideAccess: true,
+  })
+}
