@@ -4,6 +4,14 @@
   "description": "Anonymous comments and reactions plugin for Payload 3.x with optional moderation and 3-level threads.",
   "license": "MIT",
   "author": "navanem <tools@sunitech.ch>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/navanem/navanem_payload_comments.git"
+  },
+  "bugs": {
+    "url": "https://github.com/navanem/navanem_payload_comments/issues"
+  },
+  "homepage": "https://github.com/navanem/navanem_payload_comments#readme",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

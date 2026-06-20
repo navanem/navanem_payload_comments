@@ -2508,7 +2508,7 @@ moderation, mood emojis, reactions on comments, and up to 3 levels of replies.
 ```bash
 pnpm add @navanem/payload-comments
 # or from Git until published:
-pnpm add github:navanem/nanavanem_payload_comments
+pnpm add github:navanem/navanem_payload_comments
 ```
 
 `payload`, `react` and `react-dom` are peer dependencies.
@@ -2766,7 +2766,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Salted hashing of IPs and fingerprints (no clear-text storage).
 - Ready-to-use `<Comments />` React component and a documented REST API.
 
-[0.1.0]: https://github.com/navanem/nanavanem_payload_comments/releases/tag/v0.1.0
+[0.1.0]: https://github.com/navanem/navanem_payload_comments/releases/tag/v0.1.0
 ```
 
 - [ ] **Step 2: Run the full test suite and build**

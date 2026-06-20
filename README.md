@@ -51,7 +51,7 @@ The **Comment Statistics** view: KPIs (totals by status, reaction count, per-day
 ```bash
 pnpm add @navanem/payload-comments
 # or from Git until published:
-pnpm add github:navanem/nanavanem_payload_comments
+pnpm add github:navanem/navanem_payload_comments
 ```
 
 `payload`, `react` and `react-dom` are peer dependencies.
